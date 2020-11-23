@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>#</th>
+                <th>類別</th>
+                <th>日期</th>
+                <th>金額</th>
+            </tr>
+
+            @if (Model.List != null)
+            {
+                var i = 1;
+                foreach (var item in Model.List)
+                {
+                    <tr>
+                        <td>@(i)</td>
+                        <td>@(item.Category == "1" ? "支出" : "收入")</td>
+                        <td>@(item.Date)</td>
+                        <td>@(String.Format("{0:0,0}", item.Money))</td>
+                    </tr>
+                    i++;
+                }
+            }
+
+        </table>
+    </div>
+</div>
