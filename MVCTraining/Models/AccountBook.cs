@@ -1,4 +1,4 @@
-namespace MVCTraining.Repositories
+namespace MVCTraining.Models
 {
     using System;
     using System.Collections.Generic;

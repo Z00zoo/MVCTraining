@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 
-namespace MVCTraining.Repositories
+namespace MVCTraining.Models
 {
-    public partial class TrackSpendingRepository : DbContext
+    public partial class TrackSpendingModel : DbContext
     {
-        public TrackSpendingRepository()
-            : base("name=HomeWorkDB")
+        public TrackSpendingModel()
+            : base("name=TrackSpendingModel")
         {
         }
 
