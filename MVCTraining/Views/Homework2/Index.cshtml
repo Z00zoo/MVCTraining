@@ -1,45 +1,45 @@
-﻿@model MVCTraining.Models.AccountBook
+﻿@model MVCTraining.ViewModels.TrackSpendingViewModel
 
 @{
     ViewBag.Title = "我的記賬本";
 }
 
 <div class="well">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Index", "Homework2", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         @Html.AntiForgeryToken()
     @*<form class="form-horizontal" action="/Homework1/Index" method="post">*@
         @Html.ValidationSummary()
         <div class="form-group">
-            @Html.Label("Categoryyy", "類別", new { @class = "col-sm-2 control-label" })
+            @Html.Label("Category", "類別", new { @class = "col-sm-2 control-label" })
             <div class="col-sm-10">
-                <select id="Categoryyy" name="Categoryyy" class="form-control">
+                <select id="Category" name="TrackSpending.Category" class="form-control">
                     <option value="" selected>請選擇</option>
                     <option value="1">支出</option>
                     <option value="2">收入</option>
                 </select>
-                @Html.ValidationMessageFor(model => model.Categoryyy, "", new { @class = "text-danger"}) 
+                @Html.ValidationMessageFor(model => model.TrackSpending.Category, "", new { @class = "text-danger"}) 
             </div>
         </div>
         <div class="form-group">
-            @Html.Label("Amounttt", "金額", new { @class = "col-sm-2 control-label" })
+            @Html.LabelFor(model => model.TrackSpending.Money, "金額", new { @class = "col-sm-2 control-label" })
             <div class="col-sm-10">
-                @Html.TextBox("Amounttt", null, new { @class = "form-control", @placeHolder = "金額", @type = "number" })
-                @Html.ValidationMessageFor(model => model.Amounttt, "", new { @class = "text-danger"})
+                @Html.EditorFor(model => model.TrackSpending.Money, new { htmlAttributes = new { @class = "form-control", @placeHolder = "金額", @type = "number" } })
+                @Html.ValidationMessageFor(model => model.TrackSpending.Money, "", new { @class = "text-danger"})
             </div>
         </div>
         <div class="form-group">
-            @Html.Label("Dateee", "日期", new { @class = "col-sm-2 control-label" })
+            @Html.LabelFor(model => model.TrackSpending.Date, "日期", new { @class = "col-sm-2 control-label" })
             <div class="col-sm-10">
-                @Html.TextBox("Dateee", null, new { @class = "form-control", @placeholder = "日期", @type = "date" })
-                @Html.ValidationMessageFor(model => model.Dateee, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.TrackSpending.Date, new { htmlAttributes = new { @class = "form-control", @placeholder = "日期", @type = "date" } }) 
+                @Html.ValidationMessageFor(model => model.TrackSpending.Date, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.Label("Remarkkk", "備註", new { @class = "col-sm-2 control-label" })
+            @Html.LabelFor(model => model.TrackSpending.Description, "備註", new { @class = "col-sm-2 control-label" })
             <div class="col-sm-10">
-                @Html.TextArea("Remarkkk", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Remarkkk, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.TrackSpending.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TrackSpending.Description, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">

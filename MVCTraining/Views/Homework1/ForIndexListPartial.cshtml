@@ -22,7 +22,7 @@
                         <td>@(i)</td>
                         <td>@(item.Category == "1" ? "支出" : "收入")</td>
                         <td>@(item.Date)</td>
-                        <td>@(String.Format("{0:0,0}", item.Money))</td>
+                        <td>@(String.Format("{0:#,0}", item.Money))</td>
                     </tr>
                     i++;
                 }

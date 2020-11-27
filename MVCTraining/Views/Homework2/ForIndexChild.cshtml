@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVCTraining.Models.AccountBook>
+﻿@model MVCTraining.ViewModels.TrackSpendingViewModel
 
 @{
     Layout = null;
@@ -16,13 +16,13 @@
 
             @{
                 var i = 1;
-                foreach (var item in Model)
+                foreach (var item in Model.List)
                 {
                     <tr>
                         <td>@(i)</td>
-                        <td>@(item.Categoryyy == 1 ? "支出" : "收入")</td>
-                        <td>@(item.Dateee)</td>
-                        <td>@(String.Format("{0:0,0}", item.Amounttt))</td>
+                        <td>@(item.Category == 1 ? "支出" : "收入")</td>
+                        <td>@(item.Date.ToString("yyyy-MM-dd"))</td>
+                        <td>@(String.Format("{0:#,0}", item.Money))</td>
                     </tr>
                     i++;
                 }

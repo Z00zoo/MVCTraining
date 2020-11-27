@@ -4,12 +4,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVCTraining.Models;
+using MVCTraining.Service;
+using MVCTraining.Repositories;
+using MVCTraining.ViewModels;
 
 namespace MVCTraining.Controllers
 {
     public class Homework2Controller : Controller
     {
-        private TrackSpendingModel db = new TrackSpendingModel(); //建立連線
+        private readonly TrackSpendingService _trackSpendingService;
+
+        public Homework2Controller()
+        {
+            var unitOfWork = new EFUnitOfWork();
+            _trackSpendingService = new TrackSpendingService(unitOfWork);
+        }
 
         // GET: Homework2
         public ActionResult Index()
@@ -19,22 +28,28 @@ namespace MVCTraining.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include = "Id, Categoryyy, Amounttt, Dateee, Remarkkk")] AccountBook accountBook )
+        public ActionResult Index(TrackSpendingViewModel trackSpendingViewModel)
         {
             if (ModelState.IsValid)
             {
-                accountBook.Id = Guid.NewGuid();
-                db.AccountBook.Add(accountBook);
-                db.SaveChanges();
+                AccountBook accountBook = new AccountBook()
+                {
+                    Amounttt = trackSpendingViewModel.TrackSpending.Money,
+                    Categoryyy = trackSpendingViewModel.TrackSpending.Category,
+                    Dateee = trackSpendingViewModel.TrackSpending.Date,
+                    Remarkkk = trackSpendingViewModel.TrackSpending.Description
+                };
+                _trackSpendingService.Add(accountBook);
+                _trackSpendingService.Save();
 
                 return RedirectToAction("Index");
             }
-            return View(accountBook);
+            return View(trackSpendingViewModel);
         }
 
         public ActionResult ForIndexChild()
         {
-            return View(db.AccountBook.OrderBy(x => x.Dateee).ToList());
+            return View(_trackSpendingService.GetAll());
         }
     }
 }

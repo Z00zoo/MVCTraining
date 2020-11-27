@@ -7,9 +7,9 @@ namespace MVCTraining.Models
 {
     public class TrackSpending
     {
-        public string Category { get; set; }
+        public int Category { get; set; }
         public int Money { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string Description { get; set; }
     }
 }

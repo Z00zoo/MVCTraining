@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVCTraining.Models;
-using MVCTraining.Models.ViewModels;
+using MVCTraining.ViewModels;
 using Newtonsoft.Json;
 
 namespace MVCTraining.Controllers
@@ -17,9 +17,9 @@ namespace MVCTraining.Controllers
             //假資料
             var defaultList = new List<TrackSpending> 
             {
-                new TrackSpending{ Category = "1" ,Money = 300, Date = "2016-01-01"},
-                new TrackSpending{ Category = "1" ,Money = 16000, Date = "2016-01-02"},
-                new TrackSpending{ Category = "1" ,Money = 8000, Date = "2016-01-03"}
+                new TrackSpending{ Category = 1 ,Money = 300, Date = new DateTime(2016, 01, 01)},
+                new TrackSpending{ Category = 1 ,Money = 16000, Date = new DateTime(2016, 01, 02)},
+                new TrackSpending{ Category = 1 ,Money = 8000, Date = new DateTime(2016, 01, 03)}
             };
 
             var model = new TrackSpendingViewModel
