@@ -1,4 +1,4 @@
-﻿@model MVCTraining.ViewModels.TrackSpendingViewModel
+﻿@model IEnumerable<MVCTraining.ViewModels.TrackSpendingViewModel2>
 
 @{
     Layout = null;
@@ -16,13 +16,13 @@
 
             @{
                 var i = 1;
-                foreach (var item in Model.List)
+                foreach (var item in Model)
                 {
                     <tr>
                         <td>@(i)</td>
-                        <td>@(item.Category == 1 ? "支出" : "收入")</td>
-                        <td>@(item.Date.ToString("yyyy-MM-dd"))</td>
-                        <td>@(String.Format("{0:#,0}", item.Money))</td>
+                        <td>@(item.Categoryyy == 1 ? "支出" : "收入")</td>
+                        <td>@(item.Dateee.ToString("yyyy-MM-dd"))</td>
+                        <td>@(String.Format("{0:#,0}", item.Amounttt))</td>
                     </tr>
                     i++;
                 }

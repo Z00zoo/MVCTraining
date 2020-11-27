@@ -135,6 +135,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountBook.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\TrackSpending.cs" />
     <Compile Include="Models\TrackSpendingModel.cs" />
     <Compile Include="Repositories\EFUnitOfWork.cs" />

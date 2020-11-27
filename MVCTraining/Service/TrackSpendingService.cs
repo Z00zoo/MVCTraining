@@ -20,21 +20,18 @@ namespace MVCTraining.Service
         }
 
         //因viewModel設計導致無法使用IEnumerable<>
-        public TrackSpendingViewModel GetAll()
+        //改用TrackSpendingViewModel2
+        public IEnumerable<TrackSpendingViewModel2> GetAll()
         {
             var source = _accountBookRep.GetAll().OrderByDescending(x => x.Dateee);
-            var list = source.Select(accountBook => new TrackSpending()
+            var resault = source.Select(accountBook => new  TrackSpendingViewModel2()
             {
-                Category = accountBook.Categoryyy,
-                Money = accountBook.Amounttt,
-                Date = accountBook.Dateee,
-                Description = accountBook.Remarkkk
+                Categoryyy = accountBook.Categoryyy,
+                Amounttt = accountBook.Amounttt,
+                Dateee = accountBook.Dateee,
+                Remarkkk = accountBook.Remarkkk
 
             }).ToList();
-            var resault = new TrackSpendingViewModel()
-            {
-                List = list
-            };
             return resault;
         }
 

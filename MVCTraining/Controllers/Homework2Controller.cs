@@ -23,28 +23,43 @@ namespace MVCTraining.Controllers
         // GET: Homework2
         public ActionResult Index()
         {
-            return View();
+            var categoryList = new List<Category>()
+            {
+                new Category{ name = "支出", value = 1 },
+                new Category{ name = "收入", value = 2 }
+            };
+            var resault = new TrackSpendingViewModel2()
+            {
+                CategoryList = new SelectList(categoryList, "value", "name")
+            };
+            return View(resault);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(TrackSpendingViewModel trackSpendingViewModel)
+        public ActionResult Index([Bind(Include = "Amounttt, Categoryyy, Dateee, Remarkkk")] AccountBook accountBook)
         {
             if (ModelState.IsValid)
             {
-                AccountBook accountBook = new AccountBook()
-                {
-                    Amounttt = trackSpendingViewModel.TrackSpending.Money,
-                    Categoryyy = trackSpendingViewModel.TrackSpending.Category,
-                    Dateee = trackSpendingViewModel.TrackSpending.Date,
-                    Remarkkk = trackSpendingViewModel.TrackSpending.Description
-                };
                 _trackSpendingService.Add(accountBook);
                 _trackSpendingService.Save();
 
                 return RedirectToAction("Index");
             }
-            return View(trackSpendingViewModel);
+            var categoryList = new List<Category>()
+            {
+                new Category{ name = "支出", value = 1 },
+                new Category{ name = "收入", value = 2 }
+            };
+            var resault = new TrackSpendingViewModel2()
+            {
+                Amounttt = accountBook.Amounttt,
+                Categoryyy = accountBook.Categoryyy,
+                Dateee = accountBook.Dateee,
+                Remarkkk = accountBook.Remarkkk,
+                CategoryList = new SelectList(categoryList, "value", "name")
+            };
+            return View(resault);
         }
 
         public ActionResult ForIndexChild()
