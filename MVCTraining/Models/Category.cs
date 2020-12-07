@@ -10,6 +10,8 @@ namespace MVCTraining.Models
     {
         public string name { get; set; }
 
-        public int value { get; set; }
+        public string value { get; set; }
     }
+
+
 }

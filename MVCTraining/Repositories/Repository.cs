@@ -39,6 +39,13 @@ namespace MVCTraining.Repositories
             Objectset.Add(entity);
         }
 
+        public void Update(T entity)
+        {
+
+            Objectset.Attach(entity);
+            UnitOfWork.Context.Entry(entity).State = EntityState.Modified;
+        }
+
         public void Commit()
         {
             UnitOfWork.Save();

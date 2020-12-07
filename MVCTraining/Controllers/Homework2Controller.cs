@@ -23,48 +23,56 @@ namespace MVCTraining.Controllers
         // GET: Homework2
         public ActionResult Index()
         {
-            var categoryList = new List<Category>()
+            var model = new TrackSpendingViewModel2()
             {
-                new Category{ name = "支出", value = 1 },
-                new Category{ name = "收入", value = 2 }
+                CategoryList = new SelectList(GetCategoryyyList(), "value", "name")
             };
-            var resault = new TrackSpendingViewModel2()
-            {
-                CategoryList = new SelectList(categoryList, "value", "name")
-            };
-            return View(resault);
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include = "Amounttt, Categoryyy, Dateee, Remarkkk")] AccountBook accountBook)
+        //public ActionResult Index([Bind(Include = "Amounttt, Categoryyy, Dateee, Remarkkk")] AccountBook accountBook)
+        //上面寫法會不會通過寫在TrackSpendingViewModel2的自訂ValidationAttribute
+        public ActionResult Index(TrackSpendingViewModel2 viewModel2)
         {
             if (ModelState.IsValid)
             {
+                var accountBook = new AccountBook()
+                {
+                    Amounttt = viewModel2.Amounttt,
+                    Categoryyy = viewModel2.Categoryyy,
+                    Dateee = viewModel2.Dateee,
+                    Remarkkk = viewModel2.Remarkkk
+                };
+
                 _trackSpendingService.Add(accountBook);
                 _trackSpendingService.Save();
 
                 return RedirectToAction("Index");
             }
-            var categoryList = new List<Category>()
-            {
-                new Category{ name = "支出", value = 1 },
-                new Category{ name = "收入", value = 2 }
-            };
-            var resault = new TrackSpendingViewModel2()
-            {
-                Amounttt = accountBook.Amounttt,
-                Categoryyy = accountBook.Categoryyy,
-                Dateee = accountBook.Dateee,
-                Remarkkk = accountBook.Remarkkk,
-                CategoryList = new SelectList(categoryList, "value", "name")
-            };
-            return View(resault);
+
+            viewModel2.CategoryList = new SelectList(GetCategoryyyList(), "value", "name");
+
+            return View(viewModel2);
         }
 
+        [ChildActionOnly]
         public ActionResult ForIndexChild()
         {
             return View(_trackSpendingService.GetAll());
+        }
+
+        private List<Category> GetCategoryyyList()
+        {
+            var categoryList = new List<Category>()
+            {
+                new Category{ name = "請選擇" },
+                new Category{ name = "支出", value = "1" },
+                new Category{ name = "收入", value = "2" }
+            };
+
+            return categoryList;
         }
     }
 }

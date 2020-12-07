@@ -26,6 +26,12 @@ namespace MVCTraining.Repositories
         void Create(T entity);
 
         /// <summary>
+        /// 修改一個entity
+        /// </summary>
+        /// <param name="entity"></param>
+        void Update(T entity);
+
+        /// <summary>
         /// save change
         /// </summary>
         void Commit();

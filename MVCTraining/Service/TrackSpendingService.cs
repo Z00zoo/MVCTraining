@@ -41,6 +41,11 @@ namespace MVCTraining.Service
             _accountBookRep.Create(accountBook);
         }
 
+        public void Edit(AccountBook accountBook)
+        {
+            _accountBookRep.Update(accountBook);
+        }
+
         public void Save()
         {
             _unitOfWork.Save();
