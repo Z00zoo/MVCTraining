@@ -57,10 +57,33 @@ namespace MVCTraining.Controllers
             return View(viewModel2);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AjaxAction(TrackSpendingViewModel2 viewModel2)
+        {
+            if (ModelState.IsValid)
+            {
+                var accountBook = new AccountBook()
+                {
+                    Amounttt = viewModel2.Amounttt,
+                    Categoryyy = viewModel2.Categoryyy,
+                    Dateee = viewModel2.Dateee,
+                    Remarkkk = viewModel2.Remarkkk
+                };
+
+                _trackSpendingService.Add(accountBook);
+                _trackSpendingService.Save();
+
+                return View("ForIndexChild", _trackSpendingService.GetAll().Take(20));
+            }
+
+            return View("ForIndexChild");
+        }
+
         [ChildActionOnly]
         public ActionResult ForIndexChild()
         {
-            return View(_trackSpendingService.GetAll());
+            return View(_trackSpendingService.GetAll().Take(20));
         }
 
         private List<Category> GetCategoryyyList()

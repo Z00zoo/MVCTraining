@@ -5,7 +5,11 @@
 }
 
 <div class="well">
-    @using (Html.BeginForm())
+    @using (Ajax.BeginForm(new AjaxOptions() { 
+         HttpMethod = "Post",
+         UpdateTargetId = "ajax-result",
+         Url = Url.Action("AjaxAction")
+    }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary()
@@ -52,7 +56,9 @@
 </div>
 
 @*在送出後資料驗證部分遇到障礙，須將填寫表單以及列表的Model分開，故將Partial改成ChildAction *@
-@Html.Action("ForIndexChild")
+<div id="ajax-result">
+    @Html.Action("ForIndexChild")
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
