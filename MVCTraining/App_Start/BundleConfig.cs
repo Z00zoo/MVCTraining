@@ -20,17 +20,24 @@ namespace MVCTraining
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/datepicker").Include(
-                      "~/Scripts/bootstrap-datepicker.js",
-                      "~/Scripts/locales/bootstrap-datepicker.zh-TW.min.js",
-                      "~/Scripts/datepicker.js"));
+                       "~/Scripts/bootstrap-datepicker.js",
+                       "~/Scripts/locales/bootstrap-datepicker.zh-TW.min.js",
+                       "~/Scripts/datepicker.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/numpad").Include(
+                       "~/Scripts/jquery.numpad.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/ajax").Include(
+                       "~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/bootstrap-datepicker.css"));
+                       "~/Content/bootstrap.css",
+                       "~/Content/site.css",
+                       "~/Content/bootstrap-datepicker.css",
+                       "~/Content/jquery.numpad.css"));
         }
     }
 }

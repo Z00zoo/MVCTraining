@@ -1,0 +1,23 @@
+﻿@model MVCTraining.Models.SSOViewModel
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+}
+
+@section scripts
+{
+    <script>
+        var id = "@Model.Id";
+
+        console.log("id=" + id);
+
+        if (id != "") {
+            $("form").submit();
+        }
+
+    </script>
+}
+
+

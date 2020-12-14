@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace MVCTraining.Repositories
 {
@@ -10,17 +11,17 @@ namespace MVCTraining.Repositories
     {
         public IUnitOfWork UnitOfWork {get; set;}
 
-        private DbSet<T> _Objectset;
+        private DbSet<T> _ObjectSet;
 
-        private DbSet<T> Objectset
+        private DbSet<T> ObjectSet
         {
             get 
             {
-                if (_Objectset == null)
+                if (_ObjectSet == null)
                 {
-                    _Objectset = UnitOfWork.Context.Set<T>();
+                    _ObjectSet = UnitOfWork.Context.Set<T>();
                 }
-                return _Objectset;
+                return _ObjectSet;
             }
         }
 
@@ -31,24 +32,28 @@ namespace MVCTraining.Repositories
 
         public IQueryable<T> GetAll()
         {
-            return Objectset;
+            return ObjectSet;
+        }
+
+        public IQueryable<T> Query(Expression<Func<T, bool>> filter)
+        {
+            return ObjectSet.Where(filter);
+        }
+
+        public T GetSingle(Expression<Func<T, bool>> filter)
+        {
+            return ObjectSet.SingleOrDefault(filter);
         }
 
         public void Create(T entity)
         {
-            Objectset.Add(entity);
-        }
-
-        public void Update(T entity)
-        {
-
-            Objectset.Attach(entity);
-            UnitOfWork.Context.Entry(entity).State = EntityState.Modified;
+            ObjectSet.Add(entity);
         }
 
         public void Commit()
         {
             UnitOfWork.Save();
         }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,16 +21,22 @@ namespace MVCTraining.Repositories
         IQueryable<T> GetAll();
 
         /// <summary>
+        /// 搜尋
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<T> Query(Expression<Func<T, bool>> filter);
+        /// <summary>
+        /// 取得單一 entity
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        T GetSingle(Expression<Func<T, bool>> filter);
+
+        /// <summary>
         /// 新增一個entity
         /// </summary>
         /// <param name="entity"></param>
         void Create(T entity);
-
-        /// <summary>
-        /// 修改一個entity
-        /// </summary>
-        /// <param name="entity"></param>
-        void Update(T entity);
 
         /// <summary>
         /// save change

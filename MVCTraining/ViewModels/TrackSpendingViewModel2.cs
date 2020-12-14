@@ -17,7 +17,7 @@ namespace MVCTraining.ViewModels
         public int Categoryyy { get; set; }
 
         [Required]
-        [Range(0, Int32.MaxValue)]
+        [Range(1, Int32.MaxValue)]
         [RegularExpression("^\\d*$", ErrorMessage = "請輸入正整數")]
         public int Amounttt { get; set; }
 
@@ -35,7 +35,6 @@ namespace MVCTraining.ViewModels
         public TrackSpendingViewModel2()
         {
             Dateee = DateTime.Today;
-
         }
     }
 }
