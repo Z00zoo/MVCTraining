@@ -152,7 +152,9 @@ namespace MVCTraining.Controllers
                 {
                     SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
 
-                    logger.Info($"燈入成功");
+                    logger.Info($"登入成功");
+
+                    TempData["AlertMsg"] = "登入成功";
                 }
 
                 if (UserManager.FindById(account) == null)
@@ -181,14 +183,19 @@ namespace MVCTraining.Controllers
 
                         //將使用者加入角色
                         await UserManager.AddToRoleAsync(user.Id, roleName);
-
+                        TempData["AlertMsg"] = "登入成功";
                         return RedirectToAction("Index", "Home");
                     }
                     else
                     {
                         logger.Info($"無帳號 建立帳號失敗 嘗試登入");
+                        TempData["AlertMsg"] = "登入失敗，請重新操作";
                     }
                 }
+            }
+            else
+            {
+                TempData["AlertMsg"] = "登入失敗，請重新操作";
             }
 
             return RedirectToAction("Index", "Home");

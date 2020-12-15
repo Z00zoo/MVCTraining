@@ -52,5 +52,13 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        var alertMsg = "@TempData["AlertMsg"]";
+
+        if (alertMsg != "") {
+            alert(alertMsg);
+        }
+
+    </script>
 </body>
 </html>
