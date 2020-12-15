@@ -3,17 +3,15 @@
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Verifykey)
 }
 
 @section scripts
 {
     <script>
-        var id = "@Model.Id";
+        var vkey = "@Model.Verifykey";
 
-        console.log("id=" + id);
-
-        if (id != "") {
+        if (vkey != "") {
             $("form").submit();
         }
 

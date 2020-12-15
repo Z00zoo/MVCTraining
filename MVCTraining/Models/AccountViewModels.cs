@@ -118,7 +118,7 @@ namespace MVCTraining.Models
     public class SSOViewModel
     {
         [Required]
-        public string Id { get; set; }
+        public string Verifykey { get; set; }
 
     }
 }

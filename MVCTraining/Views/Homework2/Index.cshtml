@@ -120,7 +120,7 @@
         });
 
         function cleanInput() {
-            $("form").find("input , textarea").val("");
+            $("form").find("input:not([name='__RequestVerificationToken']) , textarea").val("");
         }
     </script>
 }

@@ -108,7 +108,7 @@ namespace MVCTraining.Controllers
 
                         SSOViewModel model = new SSOViewModel
                         {
-                            Id = account
+                            Verifykey = verifykey
                         };
 
                         return View("SSOLogin", model);
@@ -137,50 +137,57 @@ namespace MVCTraining.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            logger.Info($"SSO接回後Post進來 Id = {model.Id}");
+            logger.Info($"SSO接回後Post進來 vkey = {model.Verifykey}");
 
-            var user = new ApplicationUser { Id = model.Id, UserName = model.Id };
+            string account;
+            HongHwa.Sso sso = new HongHwa.Sso();
 
-            //沒帳號直接登入會跳錯
-            if (UserManager.FindById(model.Id) != null)
+            //傳遞vkey再取帳號應該比較安全?
+            if (sso.Authorize(HongHwa.Settings.SsoWebDevelop, model.Verifykey, out account))
             {
-                SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+                var user = new ApplicationUser { Id = account, UserName = account };
 
-                logger.Info($"燈入成功");
-            }
-
-            if (UserManager.FindById(model.Id) == null)
-            {
-                var createResult = await UserManager.CreateAsync(user);
-
-                foreach (var error in createResult.Errors)
+                //沒帳號直接登入會跳錯
+                if (UserManager.FindById(account) != null)
                 {
-                    logger.Debug($"ERROR = {error}");
+                    SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+
+                    logger.Info($"燈入成功");
                 }
 
-                if (createResult.Succeeded)
+                if (UserManager.FindById(account) == null)
                 {
-                    logger.Info($"無帳號 建立帳號成功");
+                    var createResult = await UserManager.CreateAsync(user);
 
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    //角色存在判斷
-                    var roleName = "一般使用者";
-
-                    if (RoleManager.RoleExists(roleName) == false)
+                    foreach (var error in createResult.Errors)
                     {
-                        var role = new IdentityRole(roleName);
-                        await RoleManager.CreateAsync(role);
+                        logger.Debug($"ERROR = {error}");
                     }
 
-                    //將使用者加入角色
-                    await UserManager.AddToRoleAsync(user.Id, roleName);
+                    if (createResult.Succeeded)
+                    {
+                        logger.Info($"無帳號 建立帳號成功");
 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    logger.Info($"無帳號 建立帳號失敗 嘗試登入");
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        //角色存在判斷
+                        var roleName = "一般使用者";
+
+                        if (RoleManager.RoleExists(roleName) == false)
+                        {
+                            var role = new IdentityRole(roleName);
+                            await RoleManager.CreateAsync(role);
+                        }
+
+                        //將使用者加入角色
+                        await UserManager.AddToRoleAsync(user.Id, roleName);
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        logger.Info($"無帳號 建立帳號失敗 嘗試登入");
+                    }
                 }
             }
 

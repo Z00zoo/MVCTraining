@@ -1,7 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
@@ -22,16 +24,19 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("首頁", "Index", "Home")</li>
-        <li>@Html.ActionLink("關於", "About", "Home")</li>
-        <li>@Html.ActionLink("連絡人", "Contact", "Home")</li>
-        <li>@Html.ActionLink("作業1", "Index", "Homework1")</li>*@
-                    <li>@Html.ActionLink("作業", "Index", new { controller = "Homework2", area = ""})</li>
-                    <li>@Html.ActionLink("管理", "Index", new { controller = "Homework2", area = "Admin"})</li>
+                    <li>@Html.ActionLink("關於", "About", "Home")</li>
+                    <li>@Html.ActionLink("連絡人", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("作業1", "Index", "Homework1")</li>*@
+                    <li>@Html.ActionLink("作業", "Index", new { controller = "Homework2", area = "" })</li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("管理", "Index", new { controller = "Homework2", area = "Admin" })</li>
+                    }
                 </ul>
                 @*<ul class="nav navbar-nav navbar-right">
-            <li>@Html.ActionLink("SSO登入", "SSOLogin", "Homework2")</li>
-            <li>@Html.ActionLink("SSO登出", "SSOLogout", "Homework2")</li>
-        </ul>*@
+                        <li>@Html.ActionLink("SSO登入", "SSOLogin", "Homework2")</li>
+                        <li>@Html.ActionLink("SSO登出", "SSOLogout", "Homework2")</li>
+                    </ul>*@
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
